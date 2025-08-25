@@ -122,17 +122,17 @@ module "azurerm_key_vault" {
 module "azurerm_key_vault_secret_username" {
     depends_on = [ module.azurerm_key_vault ]
     source = "../modules/azurerm_key_vault_secret"
-    secret_name  = "key123"
-    secret_value = "AzhaaN060719"
-    key_vault_name = "G30-KeyVault"
-    resource_group = "RG_B17_KV"
+    secret_name  = "secret123"
+    secret_value = "AzhaaN@123"
+    key_vault_name = "B17-G30-kv"
+    resource_group = "B17-G30-kv"
 }
 module "azurerm_key_vault_secret_password" {
     depends_on = [ module.azurerm_key_vault, module.azurerm_key_vault_secret_username]
     source = "../modules/azurerm_key_vault_secret"
-     secret_name  = "key123"
-    secret_value = "AzhaaN060719"
-    key_vault_name = "G30-KeyVault"
-    resource_group = "RG_B17_KV"
+     secret_name  = "secret123"
+    secret_value = "AzhaaN@123"
+    key_vault_name = "B17-G30-kv"
+    resource_group = "B17-G30-kv"
   
 }
