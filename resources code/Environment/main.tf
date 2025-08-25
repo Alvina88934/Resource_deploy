@@ -111,14 +111,14 @@ module "azurerm_sql_database" {
     sql_server_name = "preprod-sql-server"
  
 }
-module "azurerm_key_vault" {
-    depends_on = [ module.resource_group ]
-    source = "../modules/azurerm_key_vault"
-    key_vault_name = "G30-KeyVault"
-    location = "westeurope"
-    resource_group = "preprod-rg"
+# module "azurerm_key_vault" {
+#     depends_on = [ module.resource_group ]
+#     source = "../modules/azurerm_key_vault"
+#     key_vault_name = "G30-KeyVault"
+#     location = "westeurope"
+#     resource_group = "preprod-rg"
   
-}
+# }
 module "azurerm_key_vault_secret_username" {
     depends_on = [ module.azurerm_key_vault ]
     source = "../modules/azurerm_key_vault_secret"
