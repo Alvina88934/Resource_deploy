@@ -53,7 +53,7 @@ module "azurerm_backend_public_ip" {
 }
 module "azurerm_fronted_vm" {
     source = "../modules/azurerm_vm"
-    depends_on =[ module.azurerm_fronted-subnet,module.azurerm_fronted_public_ip,module.azurerm_key_vault,module.azurerm_key_vault_secret_username,module.azurerm_key_vault_secret_password]
+    depends_on =[ module.azurerm_fronted-subnet,module.azurerm_fronted_public_ip, module.azurerm_key_vault_secret_username,module.azurerm_key_vault_secret_password]
     nic_name = "fronted-nic"
     location = "westeurope"
     resource_group = "preprod-rg"
@@ -74,7 +74,7 @@ module "azurerm_fronted_vm" {
 
 module "azurerm_backend_vm" {
     source = "../modules/azurerm_vm"
-    depends_on =[ module.azurerm_backend-subnet, module.azurerm_backend_public_ip, module.azurerm_key_vault, module.azurerm_key_vault_secret_username, module.azurerm_key_vault_secret_password] 
+    depends_on =[ module.azurerm_backend-subnet, module.azurerm_backend_public_ip, module.azurerm_key_vault_secret_username, module.azurerm_key_vault_secret_password] 
     nic_name = "backend-nic"
     location = "westeurope"
     resource_group = "preprod-rg"
@@ -93,7 +93,7 @@ module "azurerm_backend_vm" {
   
 }
 module "azurerm_sql_server" {
-    depends_on = [ module.resource_group, module.azurerm_key_vault, module.azurerm_key_vault_secret_username, module.azurerm_key_vault_secret_password]
+    depends_on = [ module.resource_group, module.azurerm_key_vault_secret_username, module.azurerm_key_vault_secret_password]
     source = "../modules/azurerm_sql_server"
     sql_server_name = "preprod-sql-server"
     resource_group = "preprod-rg"
@@ -120,7 +120,7 @@ module "azurerm_sql_database" {
   
 # }
 module "azurerm_key_vault_secret_username" {
-    depends_on = [ module.azurerm_key_vault ]
+    
     source = "../modules/azurerm_key_vault_secret"
     secret_name  = "secret123"
     secret_value = "AzhaaN@123"
@@ -128,7 +128,7 @@ module "azurerm_key_vault_secret_username" {
     resource_group = "B17-G30-kv"
 }
 module "azurerm_key_vault_secret_password" {
-    depends_on = [ module.azurerm_key_vault, module.azurerm_key_vault_secret_username]
+    depends_on = [ module.azurerm_key_vault_secret_username]
     source = "../modules/azurerm_key_vault_secret"
      secret_name  = "secret123"
     secret_value = "AzhaaN@123"
