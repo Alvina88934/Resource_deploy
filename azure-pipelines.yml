@@ -1,0 +1,20 @@
+trigger:
+
+  branches:
+   include:
+     - main
+     - feature/*
+
+  paths:
+    include:
+      - '$(system.defaultworkingDirectory)Environment/dev'
+pool: new_agent
+
+stages:
+  - stage: build
+    displayName: buildcode
+    jobs:
+      - job:
+        steps:
+          - 
+
