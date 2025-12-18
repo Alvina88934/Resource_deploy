@@ -4,9 +4,12 @@ trigger:
    include:
      - main
      - feature/*
+  paths:
+     include:
+       - $'(system.defaultworkingDirectory)/environment/dev'
 variables:
   workdir: $'(system.defaultworkingDirectory)/environment/dev'
-
+  
 pool: new_agent
 
 stages:
@@ -39,7 +42,15 @@ stages:
       - job: tfsac
         displayName: scanning tool
         steps:
-          - 
-          
-
+        - task: tfsec@1
+          inputs:
+            version: 'v1.26.0'
+            dir: '''$(workdir)'''
+      - job: checkov 
+        displayName: scaningcheckov
+        steps:
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: 'cd ''''''$(workdir)'''''''
   
