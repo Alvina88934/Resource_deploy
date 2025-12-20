@@ -41,6 +41,7 @@ stages:
     jobs:
       - job: tfsac
         displayName: scanning tool
+        condition: 
         steps:
         - task: tfsec@1
           inputs:
@@ -53,4 +54,43 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'cd ''''''$(workdir)'''''''
-  
+
+  - stage: 
+    displayName: manualvalidation
+    jobs:
+      - job: manualValidation
+        displayName: Terraforninitandapply
+        pool: server
+        steps:
+          - task: ManualValidation@1
+            inputs:
+             notifyUsers: 'alvinalatif789@gmail.com'
+             approvers: 'alvinalatif789@gmail.com'
+             instructions: 'succeeded in any condition'
+             onTimeout: 'resume'
+      - job: terraforminitandapply
+        displayName: Applyandinit
+        pool: default
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(workdir)'
+              backendAzureRmOverrideSubscriptionID: '8b0422c9-d3b4-4ad5-b676-1cd162a61f87'
+              backendAzureRmResourceGroupName: 'Al_RG'
+              backendAzureRmStorageAccountName: 'alstorage99'
+              backendAzureRmContainerName: 'alcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+      - job: apply
+        displayName: terraformapply
+        dependsOn: terraforminit
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '''$(workdir)'''
+              environmentAzureRmOverrideSubscriptionID: '8b0422c9-d3b4-4ad5-b676-1cd162a61f87'
+
+
